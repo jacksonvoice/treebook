@@ -35,15 +35,18 @@
          </section>
        </nav>
      </div>
+
        <div class="row">
          <div class="small-12 small-centered column">
-           <p class="notice"><%= notice %></p>
-           <p class="alert"><%= alert %></p>
-           
+           <% flash.each do |type, message| %>
+            <div class="alert-box <%= flash_class(type) %>  radius">
+              <a href="#" class="close">&times;</a>
+              <%= message %>
+            </div>
+           <% end %>
+
            <%= yield %>
-
            <%= javascript_include_tag "application" %>
-
          </div>
        </div>
   </body>
