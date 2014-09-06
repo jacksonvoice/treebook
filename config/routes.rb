@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
+ devise_scope :user do 
+    get "register", to: "devise/registrations#new" 
+   get "login", to: "devise/sessions#new"
+   get "logout", to: "devise/sessions#destroy"
+  end
+
   resources :statuses
+  get 'feed', to: 'statuses#index'
   root to: 'statuses#index'
+
+ 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
