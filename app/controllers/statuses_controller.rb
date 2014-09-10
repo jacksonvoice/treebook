@@ -1,5 +1,5 @@
 class StatusesController < ApplicationController
-  before_filter :authenticate_user!, only: [:new, :create] 
+  before_filter :authenticate_user!, only: [:new, :create, :update]
 
   before_action :set_status, only: [:show, :edit, :update, :destroy]
 
@@ -12,6 +12,7 @@ class StatusesController < ApplicationController
   # GET /statuses/1
   # GET /statuses/1.json
   def show
+
   end
 
   # GET /statuses/new
@@ -42,6 +43,13 @@ class StatusesController < ApplicationController
   # PATCH/PUT /statuses/1
   # PATCH/PUT /statuses/1.json
   def update
+    @status = current_user.statuses.find(params[:id])
+    if params[:status] && params[:status].has_key?(:user_id)
+       params[:status].delete(:user_id) 
+    end
+
+    @status.update(status_params)
+
     respond_to do |format|
       if @status.update(status_params)
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
