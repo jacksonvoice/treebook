@@ -12,7 +12,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 
 
 		context "when logged in" do 
-			
+
 			setup do 
 				sign_in users(:daniel)
 			end	
@@ -28,12 +28,37 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 				end
 
 				should "display friends name" do 
-					get :new, friend_id: users(:olivia).id 
+					get :new, friend_id: users(:olivia)
 					assert_match /#{users(:olivia).full_name}/, response.body
 				end
+
+				should "assign a new user friendship" do 
+					get :new, friend_id: users(:olivia)
+					assert assigns(:user_friendship)
+				end
+
+				should "assigns a new user friendship to the correct friend" do 
+					get :new, friend_id: users(:olivia)
+					assert_equal users(:olivia), assigns(:user_friendship).friend
+				end
+
+				should "assign a new user friendship to the currenlty logged in user" do  
+					get :new, friend_id: users(:olivia)
+					assert_equal users(:daniel), assigns(:user_friendship).user
+				end
+
+				should "returns a 404 status if no friend is found" do 
+					get :new, friend_id: 'invlaid'
+					assert_response :not_found
+				end
+			
+				should "ask if you want to friend the user" do  
+					get :new, friend_id: users(:olivia)
+					assert_match /Do you really want to friend #{users(:olivia).full_name}?/, response.body
+
+					end
+
+
 		end
 	end
-
-
-
 end

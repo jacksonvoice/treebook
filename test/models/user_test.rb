@@ -57,6 +57,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
 
+  test "calling to param on a user shows the profile name" do  
+    assert_equal "jacksonvoice1", users(:daniel).to_param
+  end
+
 
   # test "a user can have a friend " do
   #   assert_nothing_raised do
