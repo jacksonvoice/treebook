@@ -9,6 +9,7 @@ daniel:
  last_name: Jackson
  email: test1@test.com
  profile_name: jacksonvoice1
+ encrypted_password: $2a$10$Fh/Hm8RxDsuPTeBUr6864.GARlcmt7zF2WspaXGr3BIv2C27N.osq
 
 jackson:
  first_name: Bill
